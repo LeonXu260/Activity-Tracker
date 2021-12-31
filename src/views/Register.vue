@@ -7,6 +7,7 @@
 
     <!-- Register -->
     <form
+      @submit.prevent="register"
       action=""
       class="p-8 flex flex-col bg-light-grey rounded-md shadow-lg"
     >
@@ -74,6 +75,9 @@
 
 <script>
 import { ref } from "vue";
+import { supabase } from "../supabase/init";
+import { useRouter } from "vue-router";
+
 export default {
   name: "register",
   setup() {
@@ -82,10 +86,33 @@ export default {
     const password = ref(null);
     const confirmPassword = ref(null);
     const errorMsg = ref(null);
+    const router = useRouter();
 
     // Register function
+    const register = async () => {
+      if (password.value === confirmPassword.value) {
+        try {
+          const { error } = await supabase.auth.signUp({
+            email: email.value,
+            password: password.value,
+          });
+          if (error) throw error;
+          router.replace({ name: "Login" });
+        } catch (error) {
+          errorMsg.value = error.message;
+          setTimeout(() => {
+            errorMsg.value = null;
+          }, 5000);
+        }
+        return;
+      }
+      errorMsg.value = "Error: passwords do not match";
+      setTimeout(() => {
+        errorMsg.value = null;
+      }, 5000);
+    };
 
-    return { email, password, confirmPassword, errorMsg };
+    return { email, password, confirmPassword, errorMsg, register };
   },
 };
 </script>
