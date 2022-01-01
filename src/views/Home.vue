@@ -90,7 +90,6 @@ export default {
     // Create data / vars
     const data = ref([]);
     const dataLoaded = ref(null);
-    const errorMsg = ref(null);
 
     // Get data
     const getData = async () => {
@@ -102,11 +101,7 @@ export default {
         data.value = workouts;
         dataLoaded.value = true;
       } catch (error) {
-        errorMsg.value =
-          "Error: There's an error reading your data, please try again later";
-        setTimeout(() => {
-          errorMsg.value = false;
-        }, 5000);
+        console.warn(error);
       }
     };
 
