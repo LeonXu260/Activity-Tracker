@@ -10,26 +10,41 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
+    meta: {
+      title: "Home",
+    },
   },
   {
     path: "/login",
     name: "Login",
     component: Login,
+    meta: {
+      title: "Login",
+    },
   },
   {
     path: "/register",
     name: "Register",
     component: Register,
+    meta: {
+      title: "Register",
+    },
   },
   {
     path: "/create",
     name: "Create",
     component: Create,
+    meta: {
+      title: "Create",
+    },
   },
   {
     path: "/view-workout/:workoutId",
     name: "View Workout",
     component: ViewWorkout,
+    meta: {
+      title: "View Workout",
+    },
   },
 ];
 
